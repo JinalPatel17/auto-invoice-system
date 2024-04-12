@@ -21,7 +21,7 @@ app.use(methodOverride(function (req, res) {
 let todolist = [];
 
 /* The to do list and the form are displayed */
-app.get('/todo', function (req, res) {
+app.get('/autoinvoicesys', function (req, res) {
         res.render('nodeatis.ejs', {
             todolist,
             clickHandler: "func1();"
@@ -29,25 +29,25 @@ app.get('/todo', function (req, res) {
     })
 
     /* Adding an item to the to do list */
-    .post('/todo/add/', function (req, res) {
+    .post('/autoinvoicesys/add/', function (req, res) {
         // Escapes HTML special characters in attribute values as HTML entities
         let newTodo = sanitizer.escape(req.body.newtodo);
         if (req.body.newtodo != '') {
             todolist.push(newTodo);
         }
-        res.redirect('/todo');
+        res.redirect('/autoinvoicesys');
     })
 
     /* Deletes an item from the to do list */
-    .get('/todo/delete/:id', function (req, res) {
+    .get('/autoinvoicesys/delete/:id', function (req, res) {
         if (req.params.id != '') {
             todolist.splice(req.params.id, 1);
         }
-        res.redirect('/todo');
+        res.redirect('/autoinvoicesys');
     })
 
     // Get a single todo item and render edit page
-    .get('/todo/:id', function (req, res) {
+    .get('/autoinvoicesys/:id', function (req, res) {
         let todoIdx = req.params.id;
         let todo = todolist[todoIdx];
 
@@ -58,27 +58,27 @@ app.get('/todo', function (req, res) {
                 clickHandler: "func1();"
             });
         } else {
-            res.redirect('/todo');
+            res.redirect('/autoinvoicesys');
         }
     })
 
     // Edit item in the todo list 
-    .put('/todo/edit/:id', function (req, res) {
+    .put('/autoinvoicesys/edit/:id', function (req, res) {
         let todoIdx = req.params.id;
         // Escapes HTML special characters in attribute values as HTML entities
         let editTodo = sanitizer.escape(req.body.editTodo);
         if (todoIdx != '' && editTodo != '') {
             todolist[todoIdx] = editTodo;
         }
-        res.redirect('/todo');
+        res.redirect('/autoinvoicesys');
     })
     /* Redirects to the to do list if the page requested is not found */
     .use(function (req, res, next) {
-        res.redirect('/todo');
+        res.redirect('/autoinvoicesys');
     })
 
     .listen(port, function () {
         // Logging to console
-        console.log(`Todolist running on http://0.0.0.0:${port}`)
+        console.log(`Auto Invoice System running on http://0.0.0.0:${port}`)
     });
 module.exports = app;
